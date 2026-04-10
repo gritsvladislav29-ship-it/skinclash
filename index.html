@@ -26,7 +26,7 @@ h1 {
 }
 
 button {
-    margin-top: 20px;
+    margin: 10px;
     padding: 15px;
     font-size: 18px;
     border: none;
@@ -43,13 +43,44 @@ button {
 <h1>🔥 SkinClash</h1>
 
 <div class="card">
-    <p>💰 Баланс: 100</p>
+    <p>💰 Баланс: <span id="balance">100</span></p>
+
+    <p>Выбери ставку:</p>
+    <button onclick="setBet(10)">10</button>
+    <button onclick="setBet(50)">50</button>
+    <button onclick="setBet(100)">100</button>
+
+    <p>Текущая ставка: <span id="bet">10</span></p>
+
     <button onclick="fight()">⚔️ Начать бой</button>
 </div>
 
 <script>
+let balance = 100;
+let bet = 10;
+
+function setBet(amount) {
+    bet = amount;
+    document.getElementById("bet").innerText = bet;
+}
+
 function fight() {
-    window.location.href = "https://t.me/SkinClash_bot";
+    if (balance < bet) {
+        alert("❌ Недостаточно денег");
+        return;
+    }
+
+    let win = Math.random() < 0.5;
+
+    if (win) {
+        balance += bet;
+        alert("🎉 Ты выиграл +" + bet);
+    } else {
+        balance -= bet;
+        alert("💀 Ты проиграл -" + bet);
+    }
+
+    document.getElementById("balance").innerText = balance;
 }
 </script>
 
